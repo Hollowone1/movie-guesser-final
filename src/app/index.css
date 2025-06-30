@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Rum Raisin';
+  src: url('/fonts/RumRaisin-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Optionnel : appliquer globalement */
+body {
+  font-family: 'Rum Raisin', sans-serif;
+}
