@@ -1,6 +1,4 @@
-
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const questions = [
@@ -30,6 +28,14 @@ export default function Home() {
   const [step, setStep] = useState(-1);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("movie_history");
+    if (stored) {
+      setHistory(JSON.parse(stored));
+    }
+  }, []);
 
   const handleStart = () => setStep(0);
 
@@ -39,13 +45,18 @@ export default function Home() {
     if (step < questions.length - 1) {
       setTimeout(() => setStep(step + 1), 300);
     } else {
-      fetch('../api/recommend', {
+      fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers: newAnswers })
       })
         .then(res => res.json())
-        .then(data => setResult(data));
+        .then(data => {
+          setResult(data);
+          const newHistory = [data, ...history].slice(0, 10);
+          setHistory(newHistory);
+          localStorage.setItem("movie_history", JSON.stringify(newHistory));
+        });
     }
   };
 
@@ -110,6 +121,19 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+      )}
+
+      {history.length > 0 && (
+        <div className="mt-12 w-full max-w-xl">
+          <h3 className="text-xl font-bold mb-4">Historique des recommandations</h3>
+          <ul className="space-y-2">
+            {history.map((film, idx) => (
+              <li key={idx} className="bg-white shadow p-3 rounded-md text-left">
+                🎬 <strong>{film.title}</strong> ({film.genre}) - {film.runtime} min
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
