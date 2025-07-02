@@ -16,7 +16,7 @@ export default function Home() {
             MovieGuesser est un algorithme qui prend en compte vos humeurs de la journée et vous conseille le film idéal
             pour vos matins, après-midis et soirées cinéma!
           </p>
-          <button className="bg-red-400 py-2 px-6 rounded">Envie d’essayer?</button>
+          <Link href="/recommandation"> <button className="bg-red-400 py-2 px-6 rounded">Envie d’essayer?</button></Link>
         </section>
 
         <section className="p-8 grid md:grid-cols-2 gap-8 items-center">
@@ -26,7 +26,7 @@ export default function Home() {
               Avec movie guesser, partagez vos playlists dans le feed de vos réseaux préférés avec vos amis. <br/>
               Vos films, c’est une part de vous, quand vous partagez, c’est encore mieux, plus besoin d’un psy!
             </p>
-            <button className="bg-yellow-400 py-2 px-6 rounded mt-4">Créer une playlist</button>
+            <Link href="/playlists"> <button className="bg-yellow-400 py-2 px-6 rounded mt-4">Créer une playlist</button></Link>
           </div>
           <img src="./playlists.png" alt="Playlist Icon" className="mx-auto" />
         </section>
